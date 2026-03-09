@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Academic Planner</title>
+<title>Student Academic Planner</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -15,11 +16,14 @@
 
 </head>
 
+
 <body>
 
 <div class="app">
 
-<aside class="sidebar">
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
 
 <h2>🎓 Planner</h2>
 
@@ -31,11 +35,25 @@
 
 </aside>
 
+
+<!-- CONTENT -->
+
 <main class="content">
 
 <header>
+
+<div class="header-top">
+
+<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+
 <h1>Student Academic Planner</h1>
+
+</div>
+
 </header>
+
+
+<!-- TIMETABLE -->
 
 <section id="timetable" class="page active">
 
@@ -45,7 +63,7 @@
 
 <div class="form">
 
-<input id="courseName" placeholder="Course name">
+<input id="courseName" placeholder="Course Name">
 
 <select id="courseDay">
 <option>Monday</option>
@@ -57,7 +75,7 @@
 
 <input type="time" id="courseTime">
 
-<button onclick="addCourse()">Add</button>
+<button onclick="addCourse()">Add Course</button>
 
 </div>
 
@@ -66,6 +84,9 @@
 </div>
 
 </section>
+
+
+<!-- ATTENDANCE -->
 
 <section id="attendance" class="page">
 
@@ -79,6 +100,9 @@
 
 </section>
 
+
+<!-- TEST SCHEDULER -->
+
 <section id="tests" class="page">
 
 <div class="card">
@@ -87,10 +111,10 @@
 
 <div class="form">
 
-<input id="testTitle" placeholder="Test name">
+<input id="testTitle" placeholder="Test Name">
 <input type="date" id="testDate">
 
-<button onclick="addTest()">Add</button>
+<button onclick="addTest()">Add Test</button>
 
 </div>
 
@@ -99,6 +123,9 @@
 </div>
 
 </section>
+
+
+<!-- STUDY -->
 
 <section id="study" class="page">
 
@@ -111,7 +138,7 @@
 <input id="studySubject" placeholder="Subject">
 <input type="number" id="studyHours" placeholder="Hours">
 
-<button onclick="logStudy()">Log</button>
+<button onclick="logStudy()">Log Study</button>
 
 </div>
 
@@ -120,6 +147,9 @@
 </div>
 
 </section>
+
+
+<!-- ANALYTICS -->
 
 <section id="analytics" class="page">
 
@@ -130,6 +160,7 @@
 <div class="charts">
 
 <canvas id="attendanceChart"></canvas>
+
 <canvas id="studyChart"></canvas>
 
 </div>
@@ -137,6 +168,7 @@
 </div>
 
 </section>
+
 
 </main>
 
