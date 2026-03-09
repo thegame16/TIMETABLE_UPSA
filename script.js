@@ -20,17 +20,11 @@ function toggleSidebar(){
 // Sidebar auto-retract on mobile
 // =====================
 function showPage(page){
-  // Hide all pages
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"))
-  
-  // Show selected page
   document.getElementById(page).classList.add("active")
-  
-  // Collapse sidebar and remove overlay (mobile-friendly)
-  const sidebar = document.getElementById("sidebar")
-  const overlay = document.getElementById("overlay")
-  sidebar.classList.add("collapsed")   // Retract sidebar
-  overlay.classList.remove("active")    // Remove overlay
+  // Collapse sidebar & overlay
+  document.getElementById("sidebar").classList.add("collapsed")
+  document.getElementById("overlay").classList.remove("active")
 }
 
 // =====================
@@ -49,21 +43,17 @@ function addCourse(){
   let name = document.getElementById("courseName").value
   let day = document.getElementById("courseDay").value
   let time = document.getElementById("courseTime").value
-  
   if(name && day && time){
-    courses.push({name, day, time, present:0, total:0})
+    courses.push({name, day, time, presentMarked:false, absentMarked:false})
     save()
     renderCourses()
     renderAttendance()
-  } else {
-    alert("Please fill all course details")
-  }
+  } else { alert("Please fill all course details") }
 }
 
 function renderCourses(){
   let grid = document.getElementById("timetableGrid")
   grid.innerHTML = ""
-  
   courses.forEach((c, i)=>{
     let card = document.createElement("div")
     card.className = "courseCard"
@@ -85,122 +75,117 @@ function removeCourse(i){
 }
 
 // =====================
-// ATTENDANCE TRACKER
+// ATTENDANCE TRACKER (TABLE)
 // =====================
 function renderAttendance(){
-  let container = document.getElementById("attendanceContainer")
+  const container = document.getElementById("attendanceContainer")
   container.innerHTML = ""
-  
-  courses.forEach((c,i)=>{
-    let percent = c.total ? Math.round((c.present / c.total) * 100) : 0
-    let div = document.createElement("div")
-    div.className = "attendanceCard"
-    div.innerHTML = `
-      <h3>${c.name}</h3>
-      <p>Attendance: ${percent}%</p>
-      <button onclick="present(${i})">Present</button>
-      <button onclick="absent(${i})">Absent</button>
+  if(courses.length === 0){ container.innerHTML = "<p>No courses added yet.</p>"; return }
+
+  const table = document.createElement("table")
+  table.className = "attendanceTable"
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Day</th>
+        <th>Time</th>
+        <th>Present</th>
+        <th>Absent</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  `
+  const tbody = table.querySelector("tbody")
+  courses.forEach((c, i)=>{
+    const tr = document.createElement("tr")
+    tr.innerHTML = `
+      <td>${c.name}</td>
+      <td>${c.day}</td>
+      <td>${c.time}</td>
+      <td><input type="checkbox" onclick="markPresent(${i}, this)" ${c.presentMarked?'checked':''}></td>
+      <td><input type="checkbox" onclick="markAbsent(${i}, this)" ${c.absentMarked?'checked':''}></td>
     `
-    container.appendChild(div)
+    tbody.appendChild(tr)
   })
+  container.appendChild(table)
 }
 
-function present(i){ 
-  courses[i].present++
-  courses[i].total++
+function markPresent(i, checkbox){
+  courses[i].presentMarked = checkbox.checked
+  if(checkbox.checked) courses[i].absentMarked = false
   save()
   renderAttendance()
-  updateCharts()
 }
 
-function absent(i){ 
-  courses[i].total++
+function markAbsent(i, checkbox){
+  courses[i].absentMarked = checkbox.checked
+  if(checkbox.checked) courses[i].presentMarked = false
   save()
   renderAttendance()
-  updateCharts()
 }
 
 // =====================
-// TEST SCHEDULER
+// TESTS
 // =====================
 function addTest(){
   let title = document.getElementById("testTitle").value
   let date = document.getElementById("testDate").value
-  
-  if(title && date){
-    tests.push({title,date})
-    save()
-    renderTests()
-  } else {
-    alert("Please fill test name and date")
-  }
+  if(title && date){ tests.push({title,date}); save(); renderTests() }
+  else{ alert("Please fill test name and date") }
 }
 
 function renderTests(){
-  let list = document.getElementById("testList")
+  const list = document.getElementById("testList")
   list.innerHTML = ""
-  
   tests.forEach(t=>{
-    let days = Math.ceil((new Date(t.date) - new Date()) / (1000*60*60*24))
-    let li = document.createElement("li")
+    const days = Math.ceil((new Date(t.date) - new Date()) / (1000*60*60*24))
+    const li = document.createElement("li")
     li.innerHTML = `${t.title} — ${days} days remaining`
     list.appendChild(li)
   })
 }
 
 // =====================
-// STUDY SESSIONS
+// STUDY
 // =====================
 function logStudy(){
-  let subject = document.getElementById("studySubject").value
-  let hours = parseFloat(document.getElementById("studyHours").value)
-  
-  if(subject && hours){
-    studySessions.push({subject, hours})
-    save()
-    renderStudy()
-    updateCharts()
-  } else {
-    alert("Please fill study subject and hours")
-  }
+  const subject = document.getElementById("studySubject").value
+  const hours = parseFloat(document.getElementById("studyHours").value)
+  if(subject && hours){ studySessions.push({subject,hours}); save(); renderStudy(); updateCharts() }
+  else{ alert("Please fill study subject and hours") }
 }
 
 function renderStudy(){
-  let list = document.getElementById("studyList")
+  const list = document.getElementById("studyList")
   list.innerHTML = ""
-  
   studySessions.forEach(s=>{
-    let li = document.createElement("li")
+    const li = document.createElement("li")
     li.innerHTML = `${s.subject} — ${s.hours} hrs`
     list.appendChild(li)
   })
 }
 
 // =====================
-// ANALYTICS / CHARTS
+// ANALYTICS
 // =====================
 function updateCharts(){
   // Attendance Chart
-  let attendanceData = courses.map(c => c.total ? Math.round((c.present / c.total) * 100) : 0)
-  let labels = courses.map(c => c.name)
-  
+  const attendanceData = courses.map(c => c.presentMarked ? 1 : 0)
+  const labels = courses.map(c => c.name)
   new Chart(document.getElementById("attendanceChart"),{
-    type: "bar",
-    data: { labels, datasets: [{ label:"Attendance %", data:attendanceData, backgroundColor:'#00e5ff' }] },
-    options:{ responsive:true, maintainAspectRatio:false }
+    type:"bar",
+    data:{labels,datasets:[{label:"Attendance Ticks", data:attendanceData, backgroundColor:'#00e5ff'}]},
+    options:{responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true, max:1}}}
   })
 
   // Study Pie Chart
-  let studyMap = {}
-  studySessions.forEach(s => { 
-    if(!studyMap[s.subject]) studyMap[s.subject] = 0
-    studyMap[s.subject] += s.hours
-  })
-  
+  const studyMap = {}
+  studySessions.forEach(s => { studyMap[s.subject] = (studyMap[s.subject]||0)+s.hours })
   new Chart(document.getElementById("studyChart"),{
     type:"pie",
-    data:{ labels:Object.keys(studyMap), datasets:[{ data:Object.values(studyMap), backgroundColor:['#00e5ff','#ff6ec7','#ffc300','#6a0dad','#00ff7f'] }] },
-    options:{ responsive:true, maintainAspectRatio:false }
+    data:{labels:Object.keys(studyMap), datasets:[{data:Object.values(studyMap), backgroundColor:['#00e5ff','#ff6ec7','#ffc300','#6a0dad','#00ff7f']}]},
+    options:{responsive:true, maintainAspectRatio:false}
   })
 }
 
