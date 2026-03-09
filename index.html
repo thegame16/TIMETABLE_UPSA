@@ -3,118 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Planner Dashboard</title>
+<title>Lectra Student Planner</title>
+
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
 
+<!-- SPLASH OVERLAY -->
+<div id="splash">
+  <div class="splash-content">
+    <h1>🎓 Lectra</h1>
+    <p>Powered by EdTech for Erica</p>
+  </div>
+</div>
+
 <div class="app">
-  <!-- Splash Page -->
-<section id="splash" class="page active">
-  <div class="splash-container">
-    <h1>🎓 Student Planner</h1>
-    <p class="splash-tagline">Powered by EdTech for Erica</p>
-  </div>
-</section>
 
-  <!-- Sidebar -->
-  <aside class="sidebar collapsed" id="sidebar">
-    <h2>🎓 Planner</h2>
-    <button onclick="showPage('dashboard')">🏠 Dashboard</button>
-    <button onclick="showPage('timetable')">📅 Courses</button>
-    <button onclick="showPage('attendance')">✅ Attendance</button>
-    <button onclick="showPage('overview')">📊 Attendance Overview</button>
-    <button onclick="showPage('study')">📚 Study</button>
-  </aside>
+<!-- SIDEBAR -->
+<aside class="sidebar collapsed" id="sidebar">
+  <h2>🎓 Planner</h2>
 
-  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+  <button onclick="showPage('dashboard')">🏠 Dashboard</button>
+  <button onclick="showPage('timetable')">📅 Courses</button>
+  <button onclick="showPage('attendance')">✅ Attendance</button>
+  <button onclick="showPage('overview')">📊 Overview</button>
+  <button onclick="showPage('study')">📚 Study</button>
+</aside>
 
-  <main class="content" id="content">
-    <header>
-      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-      <h1>Lectra</h1>
-    </header>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-   <!-- Dashboard -->
+<!-- MAIN CONTENT -->
+<main class="content">
+
+<header>
+<button class="menu-btn" onclick="toggleSidebar()">☰</button>
+<h1>Lectra Planner</h1>
+</header>
+
+<!-- DASHBOARD -->
 <section id="dashboard" class="page active">
-  <div class="card">
-    <h2>Dashboard</h2>
-    <div class="dashboard-cards">
-      <div class="dash-card">Total Courses: <span id="dashCourses">0</span></div>
-      <div class="dash-card">Total Classes Logged: <span id="dashClasses">0</span></div>
-      <div class="dash-card">Total Study Hours: <span id="dashStudy">0</span></div>
-    </div>
-  </div>
+
+<div class="card">
+
+<h2>Dashboard</h2>
+
+<div class="dashboard-cards">
+
+<div class="dash-card">
+Total Courses
+<span id="dashCourses">0</span>
+</div>
+
+<div class="dash-card">
+Classes Logged
+<span id="dashClasses">0</span>
+</div>
+
+<div class="dash-card">
+Study Hours
+<span id="dashStudy">0</span>
+</div>
+
+</div>
+
+</div>
+
 </section>
-    
-    <!-- Courses -->
-    <section id="timetable" class="page">
-      <div class="card">
-        <h2>Courses</h2>
-        <div class="form">
-          <input id="courseName" placeholder="Course Name">
-          <select id="courseDay">
-            <option>Monday</option>
-            <option>Tuesday</option>
-            <option>Wednesday</option>
-            <option>Thursday</option>
-            <option>Friday</option>
-          </select>
-          <input type="time" id="courseTime">
-          <button onclick="addCourse()">Add Course</button>
-        </div>
-        <div id="timetableGrid"></div>
-      </div>
-    </section>
 
-    <!-- Attendance -->
-    <section id="attendance" class="page">
-      <div class="card">
-        <h2>Log Attendance</h2>
-        <div class="form">
-          <select id="attendanceCourseSelect"></select>
-          <input type="date" id="attendanceDate">
-          <input type="time" id="attendanceTime">
-          <button onclick="logAttendance()">Log Attendance</button>
-        </div>
-      </div>
-    </section>
+<!-- COURSES -->
+<section id="timetable" class="page">
 
-    <!-- Attendance Overview -->
-    <section id="overview" class="page">
-      <div class="card">
-        <h2>Attendance Overview</h2>
-        <table id="attendanceTable">
-          <thead>
-            <tr>
-              <th>Course</th>
-              <th>Date</th>
-              <th>Time</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+<div class="card">
 
-    <!-- Study -->
-    <section id="study" class="page">
-      <div class="card">
-        <h2>Study Sessions</h2>
-        <div class="form">
-          <input id="studySubject" placeholder="Subject">
-          <input type="number" id="studyHours" placeholder="Hours">
-          <button onclick="logStudy()">Log Study</button>
-        </div>
-        <ul id="studyList"></ul>
-      </div>
-    </section>
+<h2>Courses</h2>
 
-  </main>
+<div class="form">
+<input id="courseName" placeholder="Course Name">
+<select id="courseDay">
+<option>Monday</option>
+<option>Tuesday</option>
+<option>Wednesday</option>
+<option>Thursday</option>
+<option>Friday</option>
+</select>
+<input type="time" id="courseTime">
+<button onclick="addCourse()">Add</button>
+</div>
+
+<div id="timetableGrid"></div>
+
+</div>
+
+</section>
+
+<!-- ATTENDANCE -->
+<section id="attendance" class="page">
+
+<div class="card">
+
+<h2>Log Attendance</h2>
+
+<div class="form">
+<select id="attendanceCourseSelect"></select>
+<input type="date" id="attendanceDate">
+<input type="time" id="attendanceTime">
+<button onclick="logAttendance()">Log</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview" class="page">
+
+<div class="card">
+
+<h2>Attendance Overview</h2>
+
+<table id="attendanceTable">
+
+<thead>
+<tr>
+<th>Course</th>
+<th>Date</th>
+<th>Time</th>
+</tr>
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- STUDY -->
+<section id="study" class="page">
+
+<div class="card">
+
+<h2>Study Sessions</h2>
+
+<div class="form">
+<input id="studySubject" placeholder="Subject">
+<input type="number" id="studyHours" placeholder="Hours">
+<button onclick="logStudy()">Log</button>
+</div>
+
+<ul id="studyList"></ul>
+
+</div>
+
+</section>
+
+</main>
+
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
