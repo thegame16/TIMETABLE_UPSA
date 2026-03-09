@@ -124,16 +124,35 @@ function updateDashboard(){
 // ===== Splash Page Logic =====
 window.addEventListener('load', () => {
   // Show splash page first
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
-  document.getElementById("splash").classList.add("active")
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("splash").classList.add("active");
 
-  // After 3 seconds, show dashboard
+  // After 3 seconds, hide splash and show the "original" page
   setTimeout(() => {
-    document.getElementById("splash").classList.remove("active")
-    document.getElementById("dashboard").classList.add("active")
-    updateDashboard()
-  }, 3000)
-})
+    document.getElementById("splash").classList.remove("active");
+
+    // Determine which page to show by default
+    // You can use localStorage to remember last active page
+    let lastPage = localStorage.getItem("lastPage") || "dashboard";
+    document.getElementById(lastPage).classList.add("active");
+
+    // Update dashboard data
+    updateDashboard();
+  }, 3000);
+});
+
+// ===== Remember last active page =====
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById(page).classList.add("active");
+
+  // Collapse sidebar and hide overlay
+  document.getElementById("sidebar").classList.add("collapsed");
+  document.getElementById("overlay").classList.remove("active");
+
+  // Save the current page as last active
+  localStorage.setItem("lastPage", page);
+}
 
 // ===== INITIAL RENDER =====
 renderCourses()
