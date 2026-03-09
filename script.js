@@ -162,15 +162,7 @@ function logStudySession(course,duration){
   updateDashboard()
 }
 
-function renderStudy(){
-  let list=document.getElementById("studyList")
-  list.innerHTML=""
-  studySessions.forEach(s=>{
-    let li=document.createElement("li")
-    li.innerText=`${s.course} — ${s.duration} min | ${s.date} ${s.time}`
-    list.appendChild(li)
-  })
-}
+
 
 /* DASHBOARD */
 
@@ -179,6 +171,21 @@ function updateDashboard(){
   document.getElementById("dashClasses").innerText=attendance.length
   let total=studySessions.reduce((a,b)=>a+b.duration,0)
   document.getElementById("dashStudy").innerText=total
+}
+
+function renderStudy(){
+  let list=document.getElementById("studyList")
+  list.innerHTML=""
+  studySessions.forEach(s=>{
+    // Convert duration to display string
+    let displayDuration = s.duration < 60 
+      ? `${s.duration} minutes` 
+      : `${(s.duration/60).toFixed(1)} hours`
+
+    let li=document.createElement("li")
+    li.innerText=`${s.course} — ${displayDuration} | ${s.date} ${s.time}`
+    list.appendChild(li)
+  })
 }
 
 /* SPLASH */
