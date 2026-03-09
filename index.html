@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
 <div class="app">
@@ -18,16 +16,15 @@
   <aside class="sidebar collapsed" id="sidebar">
     <h2>🎓 Planner</h2>
     <button onclick="showPage('timetable')">📅 Timetable</button>
-    <button onclick="showPage('attendance')">✅ Attendance</button>
     <button onclick="showPage('tests')">📝 Tests</button>
     <button onclick="showPage('study')">📚 Study</button>
     <button onclick="showPage('analytics')">📊 Analytics</button>
   </aside>
 
   <!-- OVERLAY -->
-  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+  <div class="overlay" id="overlay" onclick="toggleSidebar(); closeAttendanceModal()"></div>
 
-  <!-- CONTENT -->
+  <!-- MAIN CONTENT -->
   <main class="content" id="content">
 
     <header>
@@ -35,7 +32,7 @@
       <h1>Student Academic Planner</h1>
     </header>
 
-    <!-- TIMETABLE -->
+    <!-- TIMETABLE PAGE -->
     <section id="timetable" class="page active">
       <div class="card">
         <h2>Academic Timetable</h2>
@@ -55,15 +52,22 @@
       </div>
     </section>
 
-    <!-- ATTENDANCE -->
-    <section id="attendance" class="page">
-      <div class="card">
-        <h2>Attendance Tracker</h2>
-        <div id="attendanceContainer"></div>
+    <!-- ATTENDANCE MODAL -->
+    <div class="modal" id="attendanceModal">
+      <div class="modal-content">
+        <span class="close" onclick="closeAttendanceModal()">&times;</span>
+        <h3 id="modalCourseTitle"></h3>
+        <div class="modal-form">
+          <input type="date" id="attendanceDate">
+          <button onclick="markAttendance('Present')">Mark Present</button>
+          <button onclick="markAttendance('Absent')">Mark Absent</button>
+        </div>
+        <h4>Attendance History</h4>
+        <ul id="attendanceHistory"></ul>
       </div>
-    </section>
+    </div>
 
-    <!-- TEST SCHEDULER -->
+    <!-- TEST PAGE -->
     <section id="tests" class="page">
       <div class="card">
         <h2>Test Scheduler</h2>
@@ -76,7 +80,7 @@
       </div>
     </section>
 
-    <!-- STUDY SESSIONS -->
+    <!-- STUDY PAGE -->
     <section id="study" class="page">
       <div class="card">
         <h2>Study Sessions</h2>
@@ -89,7 +93,7 @@
       </div>
     </section>
 
-    <!-- ANALYTICS -->
+    <!-- ANALYTICS PAGE -->
     <section id="analytics" class="page">
       <div class="card">
         <h2>Academic Analytics</h2>
