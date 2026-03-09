@@ -3,25 +3,43 @@
 body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#1f1c2c,#928dab);color:white;}
 .app{display:flex;min-height:100vh;}
 
-/* ===== Splash Page ===== */
+/* Splash Page Styles */
 #splash {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100vh;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: white;
   font-family: 'Poppins', sans-serif;
-  font-size: 3rem;
-  animation: fadeInOut 3s ease forwards;
+  animation: fadeOut 3s ease forwards;
 }
 
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: scale(0.8); }
-  20% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.2); }
+#splash h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
 }
+
+.splash-tagline {
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideIn 2s ease forwards 0.5s; /* delay slightly so it slides in after main title */
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes slideIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* ===== Sidebar ===== */
 .sidebar{position:fixed;top:0;left:0;width:230px;height:100%;background:#141414;padding:30px 20px;display:flex;flex-direction:column;gap:15px;transition:0.35s;z-index:1000;}
