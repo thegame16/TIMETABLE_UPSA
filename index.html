@@ -23,7 +23,7 @@
 
 <!-- SIDEBAR -->
 
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar collapsed" id="sidebar">
 
 <h2>🎓 Planner</h2>
 
@@ -36,21 +36,19 @@
 </aside>
 
 
+
 <!-- CONTENT -->
 
-<main class="content">
+<main class="content" id="content">
 
 <header>
 
-<div class="header-top">
-
-<button id="menuToggle" onclick="toggleSidebar()">☰</button>
+<button class="menu-btn" onclick="toggleSidebar()">☰</button>
 
 <h1>Student Academic Planner</h1>
 
-</div>
-
 </header>
+
 
 
 <!-- TIMETABLE -->
@@ -86,6 +84,7 @@
 </section>
 
 
+
 <!-- ATTENDANCE -->
 
 <section id="attendance" class="page">
@@ -101,6 +100,7 @@
 </section>
 
 
+
 <!-- TEST SCHEDULER -->
 
 <section id="tests" class="page">
@@ -112,6 +112,7 @@
 <div class="form">
 
 <input id="testTitle" placeholder="Test Name">
+
 <input type="date" id="testDate">
 
 <button onclick="addTest()">Add Test</button>
@@ -125,7 +126,8 @@
 </section>
 
 
-<!-- STUDY -->
+
+<!-- STUDY SESSIONS -->
 
 <section id="study" class="page">
 
@@ -136,6 +138,7 @@
 <div class="form">
 
 <input id="studySubject" placeholder="Subject">
+
 <input type="number" id="studyHours" placeholder="Hours">
 
 <button onclick="logStudy()">Log Study</button>
@@ -147,6 +150,7 @@
 </div>
 
 </section>
+
 
 
 <!-- ANALYTICS -->
