@@ -50,8 +50,20 @@ button:hover{transform:scale(1.05);}
 #timetableGrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px;}
 .courseCard{background:rgba(255,255,255,0.15); padding:12px; border-radius:12px;}
 
-/* ATTENDANCE */
-.attendanceCard{background:rgba(255,255,255,0.15); padding:12px; border-radius:10px; margin-bottom:10px;}
+/* ATTENDANCE TABLE */
+.attendanceTable{
+  width:100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.attendanceTable th, .attendanceTable td{
+  padding:10px;
+  border:1px solid rgba(255,255,255,0.3);
+  text-align:center;
+  font-size:14px;
+}
+.attendanceTable th{background: rgba(255,255,255,0.15);}
+.attendanceTable td input[type="checkbox"]{transform: scale(1.2); cursor: pointer;}
 
 /* LISTS */
 ul{list-style:none; margin-top:10px;}
