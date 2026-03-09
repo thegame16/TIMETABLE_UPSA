@@ -2,9 +2,15 @@ let courses = JSON.parse(localStorage.getItem("courses")) || []
 let tests = JSON.parse(localStorage.getItem("tests")) || []
 let studySessions = JSON.parse(localStorage.getItem("study")) || []
 
+function toggleSidebar(){
+document.getElementById("sidebar").classList.toggle("collapsed")
+}
+
 function showPage(page){
 
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active")
+})
 
 document.getElementById(page).classList.add("active")
 
@@ -15,6 +21,9 @@ localStorage.setItem("courses",JSON.stringify(courses))
 localStorage.setItem("tests",JSON.stringify(tests))
 localStorage.setItem("study",JSON.stringify(studySessions))
 }
+
+
+/* COURSES */
 
 function addCourse(){
 
@@ -65,9 +74,13 @@ renderAttendance()
 
 }
 
+
+/* ATTENDANCE */
+
 function renderAttendance(){
 
 let container=document.getElementById("attendanceContainer")
+
 container.innerHTML=""
 
 courses.forEach((c,i)=>{
@@ -75,10 +88,12 @@ courses.forEach((c,i)=>{
 let percent=c.total?Math.round((c.present/c.total)*100):0
 
 let div=document.createElement("div")
+
 div.className="attendanceCard"
 
 div.innerHTML=`
 <h3>${c.name}</h3>
+
 <p>Attendance: ${percent}%</p>
 
 <button onclick="present(${i})">Present</button>
@@ -114,6 +129,9 @@ updateCharts()
 
 }
 
+
+/* TESTS */
+
 function addTest(){
 
 let title=document.getElementById("testTitle").value
@@ -146,6 +164,9 @@ list.appendChild(li)
 
 }
 
+
+/* STUDY */
+
 function logStudy(){
 
 let subject=document.getElementById("studySubject").value
@@ -177,6 +198,9 @@ list.appendChild(li)
 
 }
 
+
+/* ANALYTICS */
+
 function updateCharts(){
 
 let attendanceData=courses.map(c=>c.total?Math.round((c.present/c.total)*100):0)
@@ -187,7 +211,10 @@ new Chart(document.getElementById("attendanceChart"),{
 type:"bar",
 data:{
 labels:labels,
-datasets:[{label:"Attendance %",data:attendanceData}]
+datasets:[{
+label:"Attendance %",
+data:attendanceData
+}]
 }
 })
 
@@ -202,7 +229,9 @@ new Chart(document.getElementById("studyChart"),{
 type:"pie",
 data:{
 labels:Object.keys(studyMap),
-datasets:[{data:Object.values(studyMap)}]
+datasets:[{
+data:Object.values(studyMap)
+}]
 }
 })
 
