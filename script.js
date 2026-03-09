@@ -1,27 +1,29 @@
+// ===== Data =====
 let courses = JSON.parse(localStorage.getItem("courses")) || []
 let studySessions = JSON.parse(localStorage.getItem("study")) || []
 let attendance = JSON.parse(localStorage.getItem("attendance")) || []
 
-// Sidebar
+// ===== Sidebar =====
 function toggleSidebar(){
   document.getElementById("sidebar").classList.toggle("collapsed")
   document.getElementById("overlay").classList.toggle("active")
 }
+
 function showPage(page){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"))
   document.getElementById(page).classList.add("active")
   document.getElementById("sidebar").classList.add("collapsed")
   document.getElementById("overlay").classList.remove("active")
 }
 
-// Save
+// ===== Save =====
 function save(){
   localStorage.setItem("courses", JSON.stringify(courses))
   localStorage.setItem("study", JSON.stringify(studySessions))
   localStorage.setItem("attendance", JSON.stringify(attendance))
 }
 
-// Courses
+// ===== Courses =====
 function addCourse(){
   let name = document.getElementById("courseName").value
   let day = document.getElementById("courseDay").value
@@ -50,7 +52,7 @@ function renderCourses(){
   })
 }
 
-// Attendance Dropdown
+// ===== Attendance Dropdown =====
 function renderAttendanceSelect(){
   const sel = document.getElementById("attendanceCourseSelect")
   sel.innerHTML = ""
@@ -73,7 +75,7 @@ function renderAttendanceSelect(){
   })
 }
 
-// Attendance Logging
+// ===== Attendance Logging =====
 function logAttendance(){
   const course = document.getElementById("attendanceCourseSelect").value
   const date = document.getElementById("attendanceDate").value
@@ -93,7 +95,7 @@ function renderAttendanceTable(){
   })
 }
 
-// Study
+// ===== Study =====
 function logStudy(){
   const subject = document.getElementById("studySubject").value
   const hours = parseFloat(document.getElementById("studyHours").value)
@@ -111,33 +113,29 @@ function renderStudy(){
   })
 }
 
-// Dashboard & Charts
+// ===== Dashboard (Cards Only) =====
 function updateDashboard(){
   document.getElementById("dashCourses").innerText = courses.length
   document.getElementById("dashClasses").innerText = attendance.length
   const totalStudy = studySessions.reduce((a,b)=>a+b.hours,0)
   document.getElementById("dashStudy").innerText = totalStudy
-
-  // Attendance Chart
-  const labels = courses.map(c=>c.name)
-  const data = courses.map(c=>attendance.filter(a=>a.course===c.name).length)
-  new Chart(document.getElementById("attendanceChart"),{
-    type:"bar",
-    data:{labels,datasets:[{label:"Classes Logged",data,backgroundColor:'#00e5ff'}]},
-    options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}
-  })
-
-  // Study Chart
-  const studyMap = {}
-  studySessions.forEach(s=>{studyMap[s.subject]=(studyMap[s.subject]||0)+s.hours})
-  new Chart(document.getElementById("studyChart"),{
-    type:"pie",
-    data:{labels:Object.keys(studyMap),datasets:[{data:Object.values(studyMap),backgroundColor:['#00e5ff','#ff6ec7','#ffc300','#6a0dad','#00ff7f']}]},
-    options:{responsive:true,maintainAspectRatio:false}
-  })
 }
 
-// INITIAL RENDER
+// ===== Splash Page Logic =====
+window.addEventListener('load', () => {
+  // Show splash page first
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+  document.getElementById("splash").classList.add("active")
+
+  // After 3 seconds, show dashboard
+  setTimeout(() => {
+    document.getElementById("splash").classList.remove("active")
+    document.getElementById("dashboard").classList.add("active")
+    updateDashboard()
+  }, 3000)
+})
+
+// ===== INITIAL RENDER =====
 renderCourses()
 renderAttendanceSelect()
 renderAttendanceTable()
