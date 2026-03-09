@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Academic Planner</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<h2>🎓 Planner</h2>
+
+<button onclick="showPage('timetable')">📅 Timetable</button>
+<button onclick="showPage('attendance')">✅ Attendance</button>
+<button onclick="showPage('tests')">📝 Tests</button>
+<button onclick="showPage('study')">📚 Study</button>
+<button onclick="showPage('analytics')">📊 Analytics</button>
+
+</aside>
+
+<main class="content">
+
+<header>
+<h1>Student Academic Planner</h1>
+</header>
+
+<section id="timetable" class="page active">
+
+<div class="card">
+
+<h2>Academic Timetable</h2>
+
+<div class="form">
+
+<input id="courseName" placeholder="Course name">
+
+<select id="courseDay">
+<option>Monday</option>
+<option>Tuesday</option>
+<option>Wednesday</option>
+<option>Thursday</option>
+<option>Friday</option>
+</select>
+
+<input type="time" id="courseTime">
+
+<button onclick="addCourse()">Add</button>
+
+</div>
+
+<div id="timetableGrid"></div>
+
+</div>
+
+</section>
+
+<section id="attendance" class="page">
+
+<div class="card">
+
+<h2>Attendance Tracker</h2>
+
+<div id="attendanceContainer"></div>
+
+</div>
+
+</section>
+
+<section id="tests" class="page">
+
+<div class="card">
+
+<h2>Test Scheduler</h2>
+
+<div class="form">
+
+<input id="testTitle" placeholder="Test name">
+<input type="date" id="testDate">
+
+<button onclick="addTest()">Add</button>
+
+</div>
+
+<ul id="testList"></ul>
+
+</div>
+
+</section>
+
+<section id="study" class="page">
+
+<div class="card">
+
+<h2>Study Sessions</h2>
+
+<div class="form">
+
+<input id="studySubject" placeholder="Subject">
+<input type="number" id="studyHours" placeholder="Hours">
+
+<button onclick="logStudy()">Log</button>
+
+</div>
+
+<ul id="studyList"></ul>
+
+</div>
+
+</section>
+
+<section id="analytics" class="page">
+
+<div class="card">
+
+<h2>Academic Analytics</h2>
+
+<div class="charts">
+
+<canvas id="attendanceChart"></canvas>
+<canvas id="studyChart"></canvas>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
