@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Academic Planner</title>
+<title>Student Planner Dashboard</title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -15,27 +15,43 @@
   <!-- SIDEBAR -->
   <aside class="sidebar collapsed" id="sidebar">
     <h2>🎓 Planner</h2>
-    <button onclick="showPage('timetable')">📅 Timetable</button>
-    <button onclick="showPage('tests')">📝 Tests</button>
+    <button onclick="showPage('dashboard')">🏠 Dashboard</button>
+    <button onclick="showPage('timetable')">📅 Courses</button>
+    <button onclick="showPage('attendance')">✅ Attendance</button>
+    <button onclick="showPage('overview')">📊 Attendance Overview</button>
     <button onclick="showPage('study')">📚 Study</button>
-    <button onclick="showPage('analytics')">📊 Analytics</button>
   </aside>
 
   <!-- OVERLAY -->
-  <div class="overlay" id="overlay" onclick="toggleSidebar(); closeAttendanceModal()"></div>
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
   <!-- MAIN CONTENT -->
   <main class="content" id="content">
-
     <header>
       <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-      <h1>Student Academic Planner</h1>
+      <h1>Student Planner</h1>
     </header>
 
-    <!-- TIMETABLE PAGE -->
-    <section id="timetable" class="page active">
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="page active">
       <div class="card">
-        <h2>Academic Timetable</h2>
+        <h2>Dashboard</h2>
+        <div class="dashboard-cards">
+          <div class="dash-card">Total Courses: <span id="dashCourses">0</span></div>
+          <div class="dash-card">Total Classes Logged: <span id="dashClasses">0</span></div>
+          <div class="dash-card">Total Study Hours: <span id="dashStudy">0</span></div>
+        </div>
+        <div class="charts">
+          <canvas id="attendanceChart"></canvas>
+          <canvas id="studyChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section id="timetable" class="page">
+      <div class="card">
+        <h2>Courses</h2>
         <div class="form">
           <input id="courseName" placeholder="Course Name">
           <select id="courseDay">
@@ -52,35 +68,37 @@
       </div>
     </section>
 
-    <!-- ATTENDANCE MODAL -->
-    <div class="modal" id="attendanceModal">
-      <div class="modal-content">
-        <span class="close" onclick="closeAttendanceModal()">&times;</span>
-        <h3 id="modalCourseTitle"></h3>
-        <div class="modal-form">
-          <input type="date" id="attendanceDate">
-          <button onclick="markAttendance('Present')">Mark Present</button>
-          <button onclick="markAttendance('Absent')">Mark Absent</button>
-        </div>
-        <h4>Attendance History</h4>
-        <ul id="attendanceHistory"></ul>
-      </div>
-    </div>
-
-    <!-- TEST PAGE -->
-    <section id="tests" class="page">
+    <!-- ATTENDANCE LOG -->
+    <section id="attendance" class="page">
       <div class="card">
-        <h2>Test Scheduler</h2>
+        <h2>Log Attendance</h2>
         <div class="form">
-          <input id="testTitle" placeholder="Test Name">
-          <input type="date" id="testDate">
-          <button onclick="addTest()">Add Test</button>
+          <select id="attendanceCourseSelect"></select>
+          <input type="date" id="attendanceDate">
+          <input type="time" id="attendanceTime">
+          <button onclick="logAttendance()">Log Attendance</button>
         </div>
-        <ul id="testList"></ul>
       </div>
     </section>
 
-    <!-- STUDY PAGE -->
+    <!-- ATTENDANCE OVERVIEW -->
+    <section id="overview" class="page">
+      <div class="card">
+        <h2>Attendance Overview</h2>
+        <table id="attendanceTable">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Date</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- STUDY -->
     <section id="study" class="page">
       <div class="card">
         <h2>Study Sessions</h2>
@@ -90,17 +108,6 @@
           <button onclick="logStudy()">Log Study</button>
         </div>
         <ul id="studyList"></ul>
-      </div>
-    </section>
-
-    <!-- ANALYTICS PAGE -->
-    <section id="analytics" class="page">
-      <div class="card">
-        <h2>Academic Analytics</h2>
-        <div class="charts">
-          <canvas id="attendanceChart"></canvas>
-          <canvas id="studyChart"></canvas>
-        </div>
       </div>
     </section>
 
