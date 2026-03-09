@@ -149,11 +149,14 @@ Study Hours
 <h2>Study Sessions</h2>
 
 <div class="form">
-<input id="studySubject" placeholder="Subject">
-<input type="number" id="studyHours" placeholder="Hours">
-<button onclick="logStudy()">Log</button>
+<select id="studyCourseSelect"></select>
+<input type="number" id="studyDuration" placeholder="Duration (minutes)">
+<button onclick="startStudy()">Start Study</button>
 </div>
 
+<div id="studyTimer" style="margin:15px 0; font-size:1.5rem;"></div>
+
+<h3>Study History</h3>
 <ul id="studyList"></ul>
 
 </div>
