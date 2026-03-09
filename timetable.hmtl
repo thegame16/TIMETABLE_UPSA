@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Timetable</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100 p-10">
+
+<h1 class="text-3xl font-bold mb-6">Weekly Timetable</h1>
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<table class="w-full text-center">
+
+<tr class="bg-indigo-500 text-white">
+
+<th class="p-3">Time</th>
+<th>Mon</th>
+<th>Tue</th>
+<th>Wed</th>
+<th>Thu</th>
+<th>Fri</th>
+
+</tr>
+
+<tr class="border">
+
+<td class="p-3 font-semibold">8:00</td>
+
+<td onclick="attend('Math')" class="hover:bg-indigo-100 cursor-pointer">Math</td>
+
+<td onclick="attend('English')" class="hover:bg-indigo-100 cursor-pointer">English</td>
+
+<td onclick="attend('Physics')" class="hover:bg-indigo-100 cursor-pointer">Physics</td>
+
+<td onclick="attend('Chemistry')" class="hover:bg-indigo-100 cursor-pointer">Chemistry</td>
+
+<td onclick="attend('Biology')" class="hover:bg-indigo-100 cursor-pointer">Biology</td>
+
+</tr>
+
+<tr class="border">
+
+<td class="p-3 font-semibold">10:00</td>
+
+<td onclick="attend('History')" class="hover:bg-indigo-100 cursor-pointer">History</td>
+
+<td onclick="attend('Math')" class="hover:bg-indigo-100 cursor-pointer">Math</td>
+
+<td onclick="attend('Geography')" class="hover:bg-indigo-100 cursor-pointer">Geography</td>
+
+<td onclick="attend('Physics')" class="hover:bg-indigo-100 cursor-pointer">Physics</td>
+
+<td onclick="attend('English')" class="hover:bg-indigo-100 cursor-pointer">English</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<script src="js/attendance.js"></script>
+
+</body>
+
+</html>
